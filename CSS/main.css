@@ -1,0 +1,566 @@
+/* ==========================================================================
+   ДИЗАЙН-ТОКЕНЫ И ПЕРЕМЕННЫЕ
+   ========================================================================== */
+
+:root {
+  --bg: #0f172a;        /* slate-900 - основной фон */
+  --card: #111827;      /* gray-900 - фон карточек */
+  --muted: #94a3b8;     /* slate-400 - приглушенный текст */
+  --text: #e5e7eb;      /* gray-200 - основной текст */
+  --accent: #22d3ee;    /* cyan-400 - основной акцентный цвет */
+  --accent-2: #8b5cf6;  /* violet-500 - дополнительный акцентный цвет */
+  --ok: #10b981;        /* emerald-500 - цвет успеха */
+  --warn: #f59e0b;      /* amber-500 - цвет предупреждения */
+  --err: #ef4444;       /* red-500 - цвет ошибки */
+  --radius: 20px;       /* базовый радиус скругления */
+  --shadow: 0 20px 50px rgba(0,0,0,.35); /* тень по умолчанию */
+}
+
+/* ==========================================================================
+   БАЗОВЫЕ СТИЛИ И СБРОС
+   ========================================================================== */
+
+* {
+  box-sizing: border-box; /* Упрощает расчет размеров элементов */
+}
+
+html, body {
+  height: 100%; /* Обеспечивает полную высоту layout'а */
+}
+
+body {
+  margin: 0; 
+  font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: radial-gradient(1200px 800px at 20% -10%, #1f2937 0, transparent 60%),
+              radial-gradient(1000px 700px at 120% 50%, #0ea5e9 0, transparent 50%),
+              var(--bg); /* Сложный градиентный фон */
+  color: var(--text);
+}
+
+/* ==========================================================================
+   КОНТЕЙНЕРЫ И КАРТОЧКИ
+   ========================================================================== */
+
+.container {
+  max-width: 920px; /* Ограничение максимальной ширины */
+  margin: 40px auto; /* Центрирование */
+  padding: 20px; /* Внутренние отступы */
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  backdrop-filter: blur(8px); /* Эффект размытия */
+  border: 1px solid rgba(255,255,255,.08); /* Тонкая граница */
+  border-radius: var(--radius); 
+  box-shadow: var(--shadow); 
+  padding: 24px; /* Внутренние отступы карточки */
+}
+
+/* ==========================================================================
+   ТИПОГРАФИКА
+   ========================================================================== */
+
+h1 {
+  font-size: clamp(26px, 4vw, 36px); /* Адаптивный размер шрифта */
+  margin: 0 0 8px; /* Отступы */
+  letter-spacing: .3px; /* Межбуквенное расстояние */
+}
+
+p.lead {
+  color: var(--muted); /* Приглушенный цвет текста */
+  margin: 0 0 20px; /* Отступ снизу */
+}
+
+/* ==========================================================================
+   СЕТКА И КАРТОЧКИ ВИКТОРИН
+   ========================================================================== */
+
+.grid {
+  display: grid; 
+  gap: 16px; /* Расстояние между элементами сетки */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Адаптивная сетка */
+}
+
+.quiz-card {
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.08); 
+  border-radius: 16px; 
+  padding: 20px; 
+  transition: .2s transform; /* Плавная анимация */
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; /* Расстояние между дочерними элементами */
+  cursor: pointer; /* Указатель при наведении */
+  min-height: 160px; /* Минимальная высота */
+}
+
+.quiz-card:hover {
+  transform: translateY(-2px); /* Эффект поднятия при наведении */
+}
+
+/* ==========================================================================
+   КОМПОНЕНТЫ ИНТЕРФЕЙСА
+   ========================================================================== */
+
+/* Стили для меток-пиллов */
+.pill {
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px; 
+  font-size: 12px; 
+  color: #0f172a; 
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  padding: 6px 10px; 
+  border-radius: 999px; /* Круглая форма */
+  font-weight: 600; 
+  width: max-content; /* Ширина по содержимому */
+}
+
+/* Базовые стили кнопок */
+.btn {
+  appearance: none; /* Сброс стандартного вида */
+  border: 0; 
+  cursor: pointer; 
+  border-radius: 12px; 
+  padding: 12px 16px; 
+  font-weight: 600; 
+  color: #0f172a; 
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+/* Вторичный стиль кнопки */
+.btn.ghost {
+  background: transparent; 
+  color: var(--text); 
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+/* Состояние disabled для кнопок */
+.btn:disabled {
+  opacity: .5; 
+  cursor: not-allowed; /* Курсор "недоступно" */
+}
+
+/* ==========================================================================
+   ПРЕДСТАВЛЕНИЕ ВИКТОРИНЫ
+   ========================================================================== */
+
+/* Гибкий контейнер для строк */
+.row {
+  display: flex; 
+  gap: 16px; 
+  flex-wrap: wrap; 
+  align-items: center; 
+  justify-content: space-between;
+}
+
+/* Контейнер прогресс-бара */
+.progress {
+  height: 10px; 
+  background: rgba(255,255,255,.1); 
+  border-radius: 999px; 
+  overflow: hidden; /* Скрытие переполнения */
+}
+
+/* Полоса прогресса */
+.bar {
+  height: 100%; 
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)); 
+  width: 0; /* Начальная ширина */
+}
+
+/* Стилизация вопроса */
+.question {
+  font-size: clamp(18px, 3vw, 24px); /* Адаптивный размер */
+  margin: 16px 0; 
+  color: var(--text);
+}
+
+/* ==========================================================================
+   СТИЛИЗАЦИЯ ИЗОБРАЖЕНИЙ
+   ========================================================================== */
+
+.question-image {
+  max-width: 100%; 
+  height: auto; 
+  border-radius: 12px; 
+  margin: 16px 0; 
+  box-shadow: var(--shadow); 
+  max-height: 300px; 
+  object-fit: contain; /* Сохранение пропорций */
+}
+
+/* ==========================================================================
+   ВАРИАНТЫ ОТВЕТОВ
+   ========================================================================== */
+
+.answers {
+  display: grid; 
+  gap: 12px; /* Расстояние между ответами */
+}
+
+.answer {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  gap: 10px; 
+  padding: 14px 16px; 
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14); 
+  background: rgba(17,24,39,.5); 
+  cursor: pointer; 
+  transition: .15s; 
+  color: var(--text);
+}
+
+.answer:hover {
+  transform: translateY(-1px); /* Эффект поднятия */
+}
+
+.answer.selected {
+  outline: 2px solid var(--accent); /* Выделение выбранного ответа */
+}
+
+.answer.correct {
+  border-color: rgba(16,185,129,.7); 
+  box-shadow: inset 0 0 0 2px rgba(16,185,129,.5); /* Подсветка правильного ответа */
+}
+
+.answer.wrong {
+  border-color: rgba(239,68,68,.6); 
+  box-shadow: inset 0 0 0 2px rgba(239,68,68,.4); /* Подсветка неправильного ответа */
+}
+
+/* ==========================================================================
+   ОБЪЯСНЕНИЯ К ОТВЕТАМ
+   ========================================================================== */
+
+.explanation {
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.explanation.correct {
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--ok); /* Цвет для правильного объяснения */
+}
+
+.explanation.wrong {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--err); /* Цвет для неправильного объяснения */
+}
+
+/* ==========================================================================
+   РЕЗУЛЬТАТЫ ТЕСТА
+   ========================================================================== */
+
+.result {
+  display: grid; 
+  gap: 14px; 
+  place-items: start; 
+  text-align: left;
+}
+
+.score {
+  font-size: 36px; 
+  font-weight: 800; /* Крупный жирный шрифт для счета */
+}
+
+.tag {
+  font-size: 12px; 
+  padding: 6px 10px; 
+  border-radius: 999px; 
+  border: 1px solid rgba(255,255,255,.2); 
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   ФУТЕР
+   ========================================================================== */
+
+footer {
+  margin-top: 28px; 
+  color: var(--muted); 
+  font-size: 13px;
+}
+
+/* Наследование шрифта для ссылок и кнопок */
+a, button {
+  font-family: inherit;
+}
+
+/* ==========================================================================
+   НАВИГАЦИЯ
+   ========================================================================== */
+
+/* Контейнер для кнопок навигации */
+.nav-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.nav-btn {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   ЗАГОЛОВОК ВИКТОРИНЫ
+   ========================================================================== */
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.quiz-title-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-btn-container {
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   АДАПТИВНЫЙ ДИЗАЙН - ПЛАНШЕТЫ (max-width: 768px)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .container {
+    margin: 20px auto;
+    padding: 16px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+
+  .quiz-card {
+    padding: 16px;
+    min-height: 140px;
+  }
+
+  .answers {
+    grid-template-columns: 1fr; /* Одна колонка на мобильных */
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Кнопки навигации на мобильных */
+  .nav-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .nav-btn {
+    width: 100%;
+  }
+
+  /* Заголовок на мобильных */
+  .quiz-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .home-btn-container {
+    order: -1; /* Кнопка домой в начале */
+    align-self: flex-end;
+    margin-bottom: 8px;
+  }
+}
+
+/* ==========================================================================
+   АДАПТИВНЫЙ ДИЗАЙН - МОБИЛЬНЫЕ (max-width: 480px)
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .quiz-card {
+    min-height: 120px;
+  }
+
+  .btn {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+}
+
+/* ==========================================================================
+   УЛУЧШЕНИЯ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+    padding: 0;
+  }
+
+  .container {
+    margin: 0;
+    padding: 16px;
+  }
+
+  .card {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  h1 {
+    font-size: 24px;
+    line-height: 1.3;
+  }
+
+  /* Улучшение кнопок для мобильных */
+  .btn {
+    padding: 14px 16px;
+    font-size: 15px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Улучшение карточек викторин */
+  .quiz-card {
+    min-height: 120px;
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  /* Улучшение области ответов */
+  .answer {
+    padding: 16px;
+    min-height: 60px;
+    font-size: 15px;
+  }
+
+  /* Улучшение прогресс-бара */
+  .progress {
+    height: 8px;
+  }
+
+  /* Улучшение изображений */
+  .question-image {
+    max-height: 200px;
+    margin: 12px 0;
+  }
+
+  /* Улучшение строк с кнопками навигации */
+  .row {
+    gap: 12px;
+  }
+
+  /* Улучшение объяснений */
+  .explanation {
+    padding: 14px;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  /* Улучшение результатов */
+  .score {
+    font-size: 28px;
+  }
+
+  /* Улучшение отступов */
+  .question {
+    margin: 14px 0;
+    line-height: 1.4;
+  }
+
+  /* Специфичные настройки заголовка для мобильных */
+  .quiz-header {
+    margin-bottom: 16px;
+  }
+
+  .home-btn-container {
+    margin-bottom: 4px;
+  }
+
+  .home-btn-container .btn {
+    padding: 10px 14px;
+    font-size: 14px;
+    min-height: 40px;
+  }
+}
+
+/* ==========================================================================
+   ПРЕДОТВРАЩЕНИЕ МАСШТАБИРОВАНИЯ В IOS
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important; /* Предотвращает масштабирование в iOS */
+  }
+}
+
+/* ==========================================================================
+   АДАПТАЦИЯ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ (max-width: 320px)
+   ========================================================================== */
+
+@media (max-width: 320px) {
+  .grid {
+    grid-template-columns: 1fr; /* Одна колонка на очень маленьких экранах */
+  }
+
+  .quiz-card {
+    min-height: 110px;
+  }
+
+  .btn {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+}
+
+/* ==========================================================================
+   УЛУЧШЕНИЕ ДОСТУПНОСТИ
+   ========================================================================== */
+
+/* Убирает синее выделение при касании на iOS */
+button, .answer, .quiz-card {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Улучшение читаемости текста */
+.question, .answer span {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Предотвращение горизонтального скролла */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Улучшение отображения тегов в ответах */
+.tag {
+  font-size: 11px;
+  padding: 4px 8px;
+  white-space: nowrap; /* Запрет переноса текста */
+}
