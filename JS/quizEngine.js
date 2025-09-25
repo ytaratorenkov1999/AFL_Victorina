@@ -224,63 +224,63 @@ renderQuiz() {
 },
 
 
-  renderResult() {
-    try {
-      const { currentQuiz, score, answers } = this.state;
-      const total = currentQuiz.questions.length;
-      const pct = Math.round(score/total*100);
-      let emoji = '🙂'; if(pct>=80) emoji='🎉'; else if(pct<50) emoji='🤔';
+renderResult() {
+  try {
+    const { currentQuiz, score, answers } = this.state;
+    const total = currentQuiz.questions.length;
+    const pct = Math.round(score/total*100);
+    let emoji = '🙂'; if(pct>=80) emoji='🎉'; else if(pct<50) emoji='🤔';
 
-      return `
-        <div class="row">
-          <h1>Результат — ${currentQuiz.title}</h1>
-          <button class="btn ghost" onclick="goHome()">На главную</button>
+    return `
+      <div class="row">
+        <h1>Результат — ${currentQuiz.title}</h1>
+        <button class="btn ghost" onclick="goHome()">На главную</button>
+      </div>
+      <div class="result">
+        <div class="score">${emoji} ${score} / ${total} правильных (${pct}%)</div>
+        <div class="tag">Сложность: ${currentQuiz.difficulty}</div>
+        <div style="display:flex; gap:8px; margin-top:6px">
+          <button class="btn" onclick="startQuiz('${currentQuiz.id}')">Пройти снова</button>
+          <button class="btn ghost" onclick="goHome()">Выбрать другую</button>
         </div>
-        <div class="result">
-          <div class="score">${emoji} ${score} / ${total} правильных (${pct}%)</div>
-          <div class="tag">Сложность: ${currentQuiz.difficulty}</div>
-          <div style="display:flex; gap:8px; margin-top:6px">
-            <button class="btn" onclick="startQuiz('${currentQuiz.id}')">Пройти снова</button>
-            <button class="btn ghost" onclick="goHome()">Выбрать другую</button>
-          </div>
+      </div>
+      <details style="margin-top:18px">
+        <summary style="cursor:pointer">Показать разбор ответов</summary>
+        <div style="margin-top:12px; display:grid; gap:10px">
+          ${currentQuiz.questions.map((q, i) => {
+            const ok = answers[i] === q.correctIndex;
+            const explanation = q.explanation || '';
+
+            // Очищаем explanation от префикса "Верно:"
+            const cleanExplanation = explanation.replace(/^Верно:\s*/, '');
+
+            return `<div class="answer ${ok?'correct':'wrong'}">
+                      <div>
+                        <div style="font-weight:700">Вопрос ${i+1}.</div>
+                        <div style="color:var(--muted)">${q.text}</div>
+                      </div>
+                      <div style="text-align:right">
+                        <div class="tag" style="${ok?'color:var(--ok)':'color:var(--err)'}">${ok?'Верно':'Неверно'}</div>
+                      </div>
+                      ${cleanExplanation ? `
+                      <div class="explanation ${ok?'correct':'wrong'}" style="grid-column: 1 / -1; margin-top: 10px;">
+                        ${ok ? 'Верно: ' : 'Неверно: '}${cleanExplanation}
+                      </div>
+                      ` : ''}
+                    </div>`
+          }).join('')}
         </div>
-        <details style="margin-top:18px">
-          <summary style="cursor:pointer">Показать разбор ответов</summary>
-          <div style="margin-top:12px; display:grid; gap:10px">
-            ${currentQuiz.questions.map((q, i) => {
-              const ok = answers[i] === q.correctIndex;
-              const explanation = q.explanation || '';
-
-
-              const cleanExplanation = explanation.replace(/^Верно:\s*/, '');
-
-              return `<div class="answer ${ok?'correct':'wrong'}">
-                        <div>
-                          <div style="font-weight:700">Вопрос ${i+1}.</div>
-                          <div style="color:var(--muted)">${q.text}</div>
-                        </div>
-                        <div style="text-align:right">
-                          <div class="tag" style="${ok?'color:var(--ok)':'color:var(--err)'}">${ok?'Верно':'Неверно'}</div>
-                        </div>
-                        ${cleanExplanation ? `
-                        <div class="explanation ${ok?'correct':'wrong'}" style="grid-column: 1 / -1; margin-top: 10px;">
-                          ${cleanExplanation}
-                        </div>
-                        ` : ''}
-                      </div>`
-            }).join('')}
-          </div>
-        </details>
-      `;
-    } catch (e) {
-      return `
-        <div class="error-state">
-          <h1>Произошла ошибка</h1>
-          <button class="btn" onclick="goHome()">Вернуться на главную</button>
-        </div>
-      `;
-    }
-  },
+      </details>
+    `;
+  } catch (e) {
+    return `
+      <div class="error-state">
+        <h1>Произошла ошибка</h1>
+        <button class="btn" onclick="goHome()">Вернуться на главную</button>
+      </div>
+    `;
+  }
+},
 
   render() {
     try {

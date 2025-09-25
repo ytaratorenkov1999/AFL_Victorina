@@ -76,19 +76,19 @@ p.lead {
    ========================================================================== */
 
 .grid {
-  display: grid; 
+  display: grid;
   gap: 16px; /* Расстояние между элементами сетки */
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Адаптивная сетка */
 }
 
 .quiz-card {
   background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-  border: 1px solid rgba(255,255,255,.08); 
-  border-radius: 16px; 
-  padding: 20px; 
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 20px;
   transition: .2s transform; /* Плавная анимация */
-  display: flex; 
-  flex-direction: column; 
+  display: flex;
+  flex-direction: column;
   gap: 12px; /* Расстояние между дочерними элементами */
   cursor: pointer; /* Указатель при наведении */
   min-height: 160px; /* Минимальная высота */
@@ -104,40 +104,40 @@ p.lead {
 
 /* Стили для меток-пиллов */
 .pill {
-  display: inline-flex; 
-  align-items: center; 
-  gap: 6px; 
-  font-size: 12px; 
-  color: #0f172a; 
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #0f172a;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  padding: 6px 10px; 
+  padding: 6px 10px;
   border-radius: 999px; /* Круглая форма */
-  font-weight: 600; 
+  font-weight: 600;
   width: max-content; /* Ширина по содержимому */
 }
 
 /* Базовые стили кнопок */
 .btn {
   appearance: none; /* Сброс стандартного вида */
-  border: 0; 
-  cursor: pointer; 
-  border-radius: 12px; 
-  padding: 12px 16px; 
-  font-weight: 600; 
-  color: #0f172a; 
+  border: 0;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: #0f172a;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
 }
 
 /* Вторичный стиль кнопки */
 .btn.ghost {
-  background: transparent; 
-  color: var(--text); 
+  background: transparent;
+  color: var(--text);
   border: 1px solid rgba(255,255,255,.14);
 }
 
 /* Состояние disabled для кнопок */
 .btn:disabled {
-  opacity: .5; 
+  opacity: .5;
   cursor: not-allowed; /* Курсор "недоступно" */
 }
 
@@ -147,32 +147,32 @@ p.lead {
 
 /* Гибкий контейнер для строк */
 .row {
-  display: flex; 
-  gap: 16px; 
-  flex-wrap: wrap; 
-  align-items: center; 
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
 }
 
 /* Контейнер прогресс-бара */
 .progress {
-  height: 10px; 
-  background: rgba(255,255,255,.1); 
-  border-radius: 999px; 
+  height: 10px;
+  background: rgba(255,255,255,.1);
+  border-radius: 999px;
   overflow: hidden; /* Скрытие переполнения */
 }
 
 /* Полоса прогресса */
 .bar {
-  height: 100%; 
-  background: linear-gradient(90deg, var(--accent), var(--accent-2)); 
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
   width: 0; /* Начальная ширина */
 }
 
 /* Стилизация вопроса */
 .question {
   font-size: clamp(18px, 3vw, 24px); /* Адаптивный размер */
-  margin: 16px 0; 
+  margin: 16px 0;
   color: var(--text);
 }
 
@@ -181,12 +181,12 @@ p.lead {
    ========================================================================== */
 
 .question-image {
-  max-width: 100%; 
-  height: auto; 
-  border-radius: 12px; 
-  margin: 16px 0; 
-  box-shadow: var(--shadow); 
-  max-height: 300px; 
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
+  max-height: 300px;
   object-fit: contain; /* Сохранение пропорций */
 }
 
@@ -195,21 +195,21 @@ p.lead {
    ========================================================================== */
 
 .answers {
-  display: grid; 
+  display: grid;
   gap: 12px; /* Расстояние между ответами */
 }
 
 .answer {
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  gap: 10px; 
-  padding: 14px 16px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.14); 
-  background: rgba(17,24,39,.5); 
-  cursor: pointer; 
-  transition: .15s; 
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(17,24,39,.5);
+  cursor: pointer;
+  transition: .15s;
   color: var(--text);
 }
 
@@ -222,12 +222,12 @@ p.lead {
 }
 
 .answer.correct {
-  border-color: rgba(16,185,129,.7); 
+  border-color: rgba(16,185,129,.7);
   box-shadow: inset 0 0 0 2px rgba(16,185,129,.5); /* Подсветка правильного ответа */
 }
 
 .answer.wrong {
-  border-color: rgba(239,68,68,.6); 
+  border-color: rgba(239,68,68,.6);
   box-shadow: inset 0 0 0 2px rgba(239,68,68,.4); /* Подсветка неправильного ответа */
 }
 
@@ -260,22 +260,22 @@ p.lead {
    ========================================================================== */
 
 .result {
-  display: grid; 
-  gap: 14px; 
-  place-items: start; 
+  display: grid;
+  gap: 14px;
+  place-items: start;
   text-align: left;
 }
 
 .score {
-  font-size: 36px; 
+  font-size: 36px;
   font-weight: 800; /* Крупный жирный шрифт для счета */
 }
 
 .tag {
-  font-size: 12px; 
-  padding: 6px 10px; 
-  border-radius: 999px; 
-  border: 1px solid rgba(255,255,255,.2); 
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.2);
   color: var(--muted);
 }
 
@@ -284,8 +284,8 @@ p.lead {
    ========================================================================== */
 
 footer {
-  margin-top: 28px; 
-  color: var(--muted); 
+  margin-top: 28px;
+  color: var(--muted);
   font-size: 13px;
 }
 
